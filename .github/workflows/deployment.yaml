@@ -1,0 +1,32 @@
+name: Workflow & Review
+on:
+  push:
+    branches:
+      - release/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Build step running"
+  staging_deployment:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploy to staging environment"
+  staging_testing:
+    needs: staging_deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Run tests on staging environment"
+  approval_needed:
+    needs: staging_testing
+    runs-on: ubuntu-latest
+    environment: production   # 👈 requires approval if 'production' has reviewers set
+    steps:
+      - run: echo "This job will only continue after approval"
+  production_deployment:
+    needs: approval_needed
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deployment approved ✅"
