@@ -162,11 +162,10 @@ jobs:
             "form_value": {
               "Release Notes": $release_notes,
               "Release Type": "${{inputs.RELEASE_TYPE}}",
-              "Impacted System": "${{inputs.TEAM}}",
+              "Team": "${{inputs.TEAM}}",
               "Github Workflow": "$workflow_url",
               "Impacted Service": "${GITHUB_REPOSITORY}",
               "Monitoring Plan": "",
-              "Release Prerequisites": "",
               "Rollback Method": ""
             }
           }
