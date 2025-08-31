@@ -41,7 +41,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-duration-seconds: 3600
-          role-to-assume: arn:aws:iam::480175286602:role/GithubActionReleaseCICD
+          role-to-assume: arn:aws:iam::317144351506:role/octolark-oidc-role
           role-session-name: gh-actions-lark-approval
           aws-region: ${{ inputs.REGION }}
 
@@ -173,7 +173,7 @@ jobs:
           EOF)
 
           aws lambda invoke \
-            --function-name mfclap-lark-approval-impl-f1878ba87fa30050 \
+            --function-name lark-approval-creation \
             --payload "$lambda_payload" \
             --cli-binary-format raw-in-base64-out \
             response.json
