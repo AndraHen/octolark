@@ -19,7 +19,7 @@ on:
         type: string
       REGION:
         description: 'Region where the bucket is located'
-        default: 'ap-southeast-3'
+        default: 'ap-southeast-1'
         type: string
       SERVICE_NAME:
         description: 'The name of the service to be released'
