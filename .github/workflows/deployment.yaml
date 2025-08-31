@@ -19,6 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Run tests on staging environment"
+  automation_approval:
+    if: startsWith(github.ref_name, 'release/')
+    uses: traveloka/fs-terraform-module/.github/workflows/automate-release-note-lark-approval.yaml@v0.12.0
+    with:
+      SERVICE_NAME: octolark
+      TEAM: ${{ vars.SYSTEMS }}
+    permissions:
+      id-token: write
+      contents: write
+    secrets: inherit
   approval_needed:
     needs: staging_testing
     runs-on: ubuntu-latest
