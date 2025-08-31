@@ -58,21 +58,21 @@ jobs:
           service_name=${{ inputs.SERVICE_NAME }}
           echo "Service name: $service_name"
           
-          cluster_arn=$(aws ecs --region ap-southeast-3 list-clusters --no-paginate --query "clusterArns[?contains(@, \`${service_name}\`) == \`true\`] | [0]" --output text)
+          cluster_arn=$(aws ecs --region ap-southeast-1 list-clusters --no-paginate --query "clusterArns[?contains(@, \`${service_name}\`) == \`true\`] | [0]" --output text)
           if [[ "$cluster_arn" == "None" ]]; then
             echo -e "\033[0;31mNo cluster found for service: ${service_name}\033[0m"
             exit 1
           fi
           echo "ECS cluster: $cluster_arn"
           
-          service_arn=$(aws ecs --region ap-southeast-3 list-services --cluster "$cluster_arn" --no-paginate --query "serviceArns[0]" --output text)
+          service_arn=$(aws ecs --region ap-southeast-1 list-services --cluster "$cluster_arn" --no-paginate --query "serviceArns[0]" --output text)
           if [[ "$service_arn" == "None" ]]; then
             echo -e "\033[0;31mNo service found in cluster: $cluster_arn\033[0m"
             exit 1
           fi
           echo "ECS service: $service_arn"
 
-          task_definition_arn=$(aws ecs --region ap-southeast-3 describe-services --cluster "$cluster_arn" --service "$service_arn" --query 'services[0].taskDefinition' --output text)
+          task_definition_arn=$(aws ecs --region ap-southeast-1 describe-services --cluster "$cluster_arn" --service "$service_arn" --query 'services[0].taskDefinition' --output text)
           if [[ "$task_definition_arn" == "None" ]]; then
             echo -e "\033[0;31mNo task definition found for service: $service_arn\033[0m"
             exit 1
@@ -80,7 +80,7 @@ jobs:
           echo "Current active task definition: $task_definition_arn"
           
           # Extract the commit ID used in production from the task definition
-          image=$(aws ecs --region ap-southeast-3 describe-task-definition --task-definition "$task_definition_arn" --query 'taskDefinition.containerDefinitions[?name!=`datadog`] | [0].image' --output text)
+          image=$(aws ecs --region ap-southeast-1 describe-task-definition --task-definition "$task_definition_arn" --query 'taskDefinition.containerDefinitions[?name!=`datadog`] | [0].image' --output text)
           echo "Current active image: $image"
           
           image_tag=$(echo "$image" | awk -F: '{print $2}')
