@@ -21,7 +21,7 @@ jobs:
       - run: echo "Run tests on staging environment"
   automation_approval:
     if: startsWith(github.ref_name, 'release/')
-    uses: traveloka/fs-terraform-module/.github/workflows/automate-release-note-lark-approval.yaml@v0.12.0
+    uses: ./.github/workflows/lark-automation-approval.yaml
     with:
       SERVICE_NAME: octolark
       TEAM: ${{ vars.SYSTEMS }}
