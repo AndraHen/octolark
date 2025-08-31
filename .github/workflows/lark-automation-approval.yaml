@@ -48,7 +48,7 @@ jobs:
       - name: Generate changelog
         id: changelog
         env:
-          GITHUB_TOKEN: ${{ secrets.ORG_GODWITBOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get current release tag from branch name (e.g. release/20250623-3 -> 20250623-3)
           release_branch=${GITHUB_REF#refs/heads/}
